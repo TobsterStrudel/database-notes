@@ -1,0 +1,89 @@
+\documentclass[12pt]{report}
+\title{\textbf{COP3703 Intro to Databases\\Exam 1 Notes}}
+\author{Tobias Dault}
+\date{\today}
+
+\addtolength{\textheight}{3cm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage[tmargin=1in,lmargin=1in,rmargin=1in]{geometry}
+\usepackage{titlesec}
+
+\DeclareCaptionFormat{custom}
+{%
+	\textbf{\footnotesize #1#2}\textit{\footnotesize #3}
+}
+\captionsetup{format=custom}
+
+\graphicspath{ {./assets/} }
+
+\hypersetup{ colorlinks=true, linkcolor=blue, filecolor=purple, urlcolor=cyan }
+
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
+
+\setlist[description]{noitemsep, topsep=0pt, itemsep=.5em}
+\setlist[enumerate]{noitemsep, topsep=0pt, itemsep=.5em}
+\setlist[itemize]{noitemsep, topsep=0pt, itemsep=.5em}
+
+\titleformat{\chapter}
+{\Large\bfseries}
+{\thechapter.}{0.5em}{}
+
+\titleformat{\section}
+{\large\bfseries}
+{\thesection.}{0.5em}{}
+
+\titleformat{\subsection}
+{\normalsize\bfseries}
+{\thesubsection.}{0.5em}{}
+
+\titlespacing\chapter{0pt}{12pt plus 0pt minus 4pt}{0pt plus 0pt minus 4pt}
+\titlespacing\section{0pt}{12pt plus 4pt minus 8pt}{0pt plus 2pt minus 8pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	\thispagestyle{empty}
+	
+	\chapter{Week 1}
+	\section{Definitions}
+	
+	\begin{description}[style=multiline,leftmargin=12em]
+		\item [Database] a collection of related data with implicit meaning.
+		\item [DBMS] Database management system. A software package/system to facilitate 
+		the creation and maintenance of a computerized database that takes care of storage, query execution, and database manipulation.
+		\item [Database System] The DBMS software together with the data itself. Sometimes, the applications are also included.
+		\item [Data Records] Rows or columns of data with correlated data.
+		\item [Data Elements] Elements within a database, like cells in Excel.
+		\item [Data Types] Integer, Varchar(255), etc.
+		\item [Program-data Independence] Insulation between programs and data. Allows changing data structures and storage organization without having to change the DBMS access programs.
+		\item[Data Abstraction] Conceptual data representation different from data storage. Words and recognizable symbols rather than the raw ones and zeros of low level computation.
+		\item[Actors] Everything interacting with the database system: DBMS designers, system admins, database admins, users, apps, data source, etc.
+	\end{description}
+	
+	\section{Database Attributes}
+	
+	\chapter{Week 2}
+	\section{Definitions}
+	\begin{description}[style=multiline,leftmargin=12em]
+		\item [Schemas/Schemata] Data (record) structure, untyped, no constraints or relationships, and doesn't change frequently. \textbf{Description of data}.
+		\item [Schema Evolution] the change of a schema (avoid it). Could indicate poor design if required.
+		\item [Schema Construct] Specific names of schemata (table headers/titles).
+		\item [Database Snapshot] Data of databases at a specific time.
+		\item [Empty State] Only the schema, \textbf{no population}.
+		\item [Initial State] When the database is first populated
+	\end{description}
+	\section{Database Creation}
+	Every time the database is updated, we get another database state i.e. the current state (current snapshot)
+	
+	
+\end{document}
