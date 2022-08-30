@@ -61,6 +61,7 @@
 		\item [Database] a collection of related data with implicit meaning.
 		\item [DBMS] Database management system. A software package/system to facilitate 
 		the creation and maintenance of a computerized database that takes care of storage, query execution, and database manipulation.
+		\item [DBA] Database Administrator
 		\item [Database System] The DBMS software together with the data itself. Sometimes, the applications are also included.
 		\item [Data Records] Rows or columns of data with correlated data.
 		\item [Data Elements] Elements within a database, like cells in Excel.
@@ -71,16 +72,42 @@
 	\end{description}
 	
 	\section{Database Attributes}
+	\begin{description}
+		\item [Self-describing]
+		\item [Insulation]
+		\item [Support of multiple user views]
+	\end{description}
 	
 	\chapter{Week 2}
 	\section{Definitions}
 	\begin{description}[style=multiline,leftmargin=12em]
-		\item [Schemas/Schemata] Data (record) structure, untyped, no constraints or relationships, and doesn't change frequently. \textbf{Description of data}.
+		\item [Schemas/Schemata] Data (record) structure, untyped, no constraints or relationships, and doesn't change frequently. \textit{Description of data}.
 		\item [Schema Evolution] the change of a schema (avoid it). Could indicate poor design if required.
 		\item [Schema Construct] Specific names of schemata (table headers/titles).
 		\item [Database Snapshot] Data of databases at a specific time.
-		\item [Empty State] Only the schema, \textbf{no population}.
+		\item [Empty State] Only the schema, \textit{no population}.
 		\item [Initial State] When the database is first populated
+		\item [3-layer Architecture] External views, conceptual schema, and internal schema. Recommended format. Also called 3-schema/ANSI architecture.
+		\item [External View] External/Conceptual mapping. End users. Provides separate views to different users, Permits only certain operations: \textbf{submit form data}, \textbf{execute stored procedures}.
+		\item [Conceptual Schema] Conceptual/Internal mapping. Hides the details of the physical storage structure. \textbf{Entities}, \textbf{Attributes}, and \textbf{Relationships}.
+		\item [Internal Schema] Contains actual data, stored database. Describes the physical storage structure. Contains \textbf{access path} information. 
+		\item [Logical data independece] change the conceptual schema without having to change external schemata or application programs.
+		\item [Physical data independece]change the internal schema without having to change the conceptual schema.
+		
+		\item [Submit form data]
+		\item [Stored Procedures]
+		\item [Entities] represent real world objects. Ex. Students, Courses
+		\item [Attributes] Represent entity properties. Ex. Name, ID
+		\item [Relationships] Represent entity associations. Ex. Is enrolled in
+		\item [Access paths] Search structure that allows finding of records by attributes, uses indexing or hashing, may be optimized for different common-case queries.
+		
+		\item [DBMS Languages] \textbf{DDL}, \textbf{SDL}, \textbf{DML} all used in SQL. These languages are usually not considered distinct languages.
+		\item [DDL] Data definition language. Conceptual and internal schemata.
+		\item [SDL] Storage definition language. Internal schema
+		\item [DML] Data manipulation language. A means for users to manipulate the database. Retrieval, insertion, deletion, and modification of the data.
+		
+		
+		\item [Concurency Control]
 	\end{description}
 	\section{Database Creation}
 	Every time the database is updated, we get another database state i.e. the current state (current snapshot)
