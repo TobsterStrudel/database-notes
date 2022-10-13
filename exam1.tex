@@ -1,6 +1,6 @@
 \documentclass[12pt]{report}
 \title{\textbf{COP3703 Intro to Databases\\Exam 1 Notes}}
-\author{Tobias Dault}
+\author{Furio. Digitized by Tobias Dault}
 \date{\today}
 
 \addtolength{\textheight}{3cm}
@@ -8,8 +8,10 @@
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{graphicx}
+\graphicspath{ {./images/} }
 \usepackage{multicol}
 \usepackage{subcaption}
+\usepackage{tikz}
 \usepackage[tmargin=1in,lmargin=1in,rmargin=1in]{geometry}
 \usepackage{titlesec}
 
@@ -18,16 +20,16 @@
 	\textbf{\footnotesize #1#2}\textit{\footnotesize #3}
 }
 \captionsetup{format=custom}
-
-\graphicspath{ {./assets/} }
-
 \hypersetup{ colorlinks=true, linkcolor=blue, filecolor=purple, urlcolor=cyan }
 
 \newlength\tindent
 \setlength{\tindent}{\parindent}
 \setlength{\parindent}{0pt}
 \renewcommand{\indent}{\hspace*{\tindent}}
-
+\newcommand*\mycirc[1]{%
+	\begin{tikzpicture}
+		\node[draw,circle,inner sep=1pt] {#1};
+\end{tikzpicture}}
 \setlist[description]{noitemsep, topsep=0pt, itemsep=.5em}
 \setlist[enumerate]{noitemsep, topsep=0pt, itemsep=.5em}
 \setlist[itemize]{noitemsep, topsep=0pt, itemsep=.5em}
@@ -44,9 +46,7 @@
 {\normalsize\bfseries}
 {\thesubsection.}{0.5em}{}
 
-\titlespacing\chapter{0pt}{12pt plus 0pt minus 4pt}{0pt plus 0pt minus 4pt}
-\titlespacing\section{0pt}{12pt plus 4pt minus 8pt}{0pt plus 2pt minus 8pt}
-\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
 
 \begin{document}
 	
@@ -54,63 +54,271 @@
 	\tableofcontents
 	\thispagestyle{empty}
 	
-	\chapter{Week 1}
-	\section{Definitions}
+	\chapter{Chapter 1}
+	\section{Why Databases?}
+	\begin{itemize}
+		\item Goal of reliable info, storage, retrieval, and assurance at scale.
+		\item Definition: A collection of data that is related and has an implicit meaning.
+		\item \textbf{Implicit Properties}
+		\begin{itemize}
+			\item represents "real-world" aspect (entities), where changes to this subset of the real world (UoD) show on the database.
+			\item data is logically coherent with purpose for users or programs.
+		\end{itemize}
+		\item \textbf{Why databases $>$ Files (in some cases)}
+		\begin{itemize}
+			\item consider two offices that need similar data
+			\item we should give them a way to simultaneously access and update the same data, to avoid redundancies and wasted space.
+		\end{itemize}
+	\end{itemize}
+	\section{Database Management System (DBMS)}
+	\begin{itemize}
+		\item software for creation and maintenance of computer database.
+		\item manages storage, queries, and data manipulation.
+		\item this class uses Oracle DBMS
+	\end{itemize}
+	\section{Database System}
+	\begin{itemize}
+		\item The DBMS software as well as the actual data, and potentially other applications.
+		\item Where you actually query, as well as what defines the "database definition" (metadata).
+	\end{itemize}
 	
-	\begin{description}[style=multiline,leftmargin=12em]
-		\item [Database] a collection of related data with implicit meaning.
-		\item [DBMS] Database management system. A software package/system to facilitate 
-		the creation and maintenance of a computerized database that takes care of storage, query execution, and database manipulation.
-		\item [DBA] Database Administrator
-		\item [Database System] The DBMS software together with the data itself. Sometimes, the applications are also included.
-		\item [Data Records] Rows or columns of data with correlated data.
-		\item [Data Elements] Elements within a database, like cells in Excel.
-		\item [Data Types] Integer, Varchar(255), etc.
-		\item [Program-data Independence] Insulation between programs and data. Allows changing data structures and storage organization without having to change the DBMS access programs.
-		\item[Data Abstraction] Conceptual data representation different from data storage. Words and recognizable symbols rather than the raw ones and zeros of low level computation.
-		\item[Actors] Everything interacting with the database system: DBMS designers, system admins, database admins, users, apps, data source, etc.
-	\end{description}
+	\section{Terminology/Example Database}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Name & Number & Class & Major\\
+			\hline
+			Tony & 123 & IT30 & IT\\
+			Robert & 124 & CS20 & CS\\
+			\hline
+		\end{tabular}
+		\\ $\ast$ one table in the database, also includes course, grades, pre-req tables, etc.$\ast$
+	\end{center}
+	\begin{itemize}
+		\item any row is a \underline{record}
+		\item any single item is an \underline{element}
+		\item all elements need a particular \underline{type}, i.e. int or char.
+		\item may need to combine info from multiple tables to satisfy a \underline{query}
+		\item queries provide \underline{information} to the user, ideally useful.
+	\end{itemize}
+	\section{Self-Describing Data Structure}
+	\begin{itemize}
+		\item relations (the aforementioned tables) need to have their number of columns identified, and columns must have their type and associated relation specified.
+	\end{itemize}
+	\section{Program-data Independence}
+	\begin{itemize}
+		\item Allows changes to data structures and storage without changing DBMS access programs.
+		\item Basically, API function access over direct access.
+	\end{itemize}
+	\section{Data Abstraction}
+	\begin{itemize}
+		\item conceptual data representation abstract details of data storage.
+	\end{itemize}
+	\section{Support for Multiple Views}
+	\begin{itemize}
+		\item Relations may be combined and presented in a relevant and useful way to users (i.e., GUIs for general works, hiding SSNs from non-HR).
+	\end{itemize}
+	\section{Multi-user Transactions}
+	\begin{itemize}
+		\item Transactions may be completed reliably, concurrency is accounted for (i.e. no double-booking).
+		\item For any transaction in a complex system, there are likely to be many complex steps and queries.
+	\end{itemize}
+	\section{Bad use Case}
+	\begin{itemize}
+		\item Databases require extra hardware software, training, and implement costly features to help concurrency, ease of access.
+	\end{itemize}
+	\chapter{Chapter 2}
+	\section{Database Schema/Schemata}
+	\begin{itemize}
+		\item data/record structure
+		\item NO TYPE INFO!
+		\item no constraints/relations
+		\item does not changes frequently (evolution)
+	\end{itemize}
+	\section{Database State}
+	\begin{itemize}
+		\item data of database at any given time is called its \underline{state}, or a \underline{snapshot}
+		\item \textbf{Empty} - just the schema
+		\item \textbf{Initial State} after first populated data
+		\item state changes after each update.
+		\item bad for static data, low-resource/embedded systems, real-time requirements, or single-user.
+	\end{itemize}
+	$\ast$INSERT EXAMPLE HERE$\ast$
 	
-	\section{Database Attributes}
-	\begin{description}
-		\item [Self-describing]
-		\item [Insulation]
-		\item [Support of multiple user views]
-	\end{description}
+	\section{Design Goals}
+	\begin{itemize}
+		\item self describing
+		\item insulation of programs and data
+		\item multi-user access/view
+	\end{itemize}
+	\section{Brainstorming-Building a Databases}
+	\begin{itemize}
+		\item data is well labeled and related
+		\item mechanism to prevent simultaneous modification
+		\item buffer breaking connection ????? outside access and stored data
+	\end{itemize}
+	\section{Three Schema Architecture (ANSI Architecture)}
+	$\ast$INSERT DIAGRAM$\ast$
+	\section{Internal Schema}
+	\begin{itemize}
+		\item describes physical storage
+		\item access paths
+		\begin{itemize}
+			\item search structure using indices, trees, hashing, etc.
+			\item ideally optimized for common case.
+		\end{itemize}
+	\end{itemize}
+	\section{Conceptual Schema}
+	\begin{itemize}
+		\item hides details of physical storage
+		\item introduces entities, attributes, relationships, to describe and model data more naturally.
+	\end{itemize}
+	\section{External Schema}
+	\begin{itemize}
+		\item provides different views as appropriate to various user type (access control)
+		\item what process type of users are permitted to execute
+		\item get form data
+	\end{itemize}
+	\section{Data Independence}
+	\begin{itemize}
+		\item \textbf{Logical data independence}: ability to change conceptual schema without change to external schema
+		\item \textbf{Physics data independence}: change internal without change to conceptual schema
+	\end{itemize}
+	\section{DBMS Languages}
+	\begin{itemize}
+		\item Data Definition Language (DDL)
+		\item Storage Definition Language (SDL)
+		\item Data Manipulation Language (DML)
+		\item in modern systems, all in one language but separately compiled.
+	\end{itemize}
+	\section{DBMS}
+	\begin{itemize}
+		\item common (keyboard, forms, speech to text) to less considered (embedded system, cameras)
+	\end{itemize}
+	\section{Evolution of Databases/DBMSs}
+	\begin{itemize}
+		\item intrinsically linked to growth of computers
+		\item \textbf{Centralized}: early on, runs as a normal program on non-networked computer $\rightarrow$ singlepoint failure.
+		\item \textbf{Two-tier}: client linked to server via network, but no buffer $\rightarrow$ no program/data insulation
+		\item \textbf{Three-tier}: modern external/conceptual/internal design
+	\end{itemize}
+	\chapter{Chapter 3}
+	\section{Basics of ER Diagrams}
+	\begin{itemize}
+		\item \textbf{Entity}: something in the miniworld with an independent existence.
+		\item \textbf{Attribute}: properties that describe the entity
+		\begin{itemize}
+			\item \underline{Atomic}: an attribute which cannot be further divided
+			\item \underline{Compound}: an attribute consisting of other compound/atomic attributes (design choice)
+			\item \underline{single} vs \underline{multivalued} possible (i.e. dropdown vs checkboxes, also a design decision)
+			\item \underline{Stored} (i.e. directly storing age) \underline{derived} (i.e. getting age from birthday)
+			\item \underline{NULL} values (interpret as N/A, missing, etc)
+			\item \underline{Complex} attributes, such as nested, composite, or multivalued attributes.
+			\item \underline{Key Attribute} Can ID each entity uniquely as efficiently as possible due to two properties.
+			\begin{itemize}
+				\item Uniqueness (within entity type)
+				\item Minimality (i.e. why store name and n-number when n-number is already unique)
+			\end{itemize}
+		\end{itemize}
+		
+	\end{itemize}
+	\includegraphics[scale=0.5]{image1.png}
+	\section{Entity Type}
+	\begin{itemize}
+		\item a name representing the set of all entities of the same type (always singular, all caps)
+		\item \textbf{Intention/schema}: attribute types associated with entity
+		\item \textbf{Extension/entity set}: all entities in the DB of this particular type.
+		\item \textbf{n-tier architecture}: scale increases, complex platform support, difficult for one layer to handle all abstraction, provide useful APIs for each layer
+	\end{itemize}
+	\section{Exercise}: Web system for airline tickets/reservation\\
+	$\ast$INSERT VISUAL$\ast$
+	\section{Weak Entity Identification}
+	\begin{itemize}
+		\item double line
+		\item a weak entity can be uniquely identified by combining its partial key with the key of the entity on the other side of the double-lined relationship this weak entity is connected to, by double lines.
+	\end{itemize}
+	\chapter{Chapter 4}
+	\section{Extended Entity Relationship (EER) Diagrams}
+	\begin{itemize}
+		\item Superset of ER diagrams, primarily adding subclasses and superclasses, plus union and category types with inheritance.
+	\end{itemize}
+	\subsection{Super class $-->--$ subclass}
+	\begin{itemize}
+		\item subclass inherits all attributes of parent, and may define additional ones
+		\item relationships may be defined on subclasses and not superclasses as well
+		\begin{itemize}
+			\item but, a subclass inherits relationships from the parent
+		\end{itemize}
+	\end{itemize}
+	\section{Specialization}
+	\begin{itemize}
+		\item \textbf{specialization} is the process of defining a set of subclasses of an entity type
+		\item defined on basis of distinguishing characteristic in entity type.
+	\end{itemize}
+	\section{Predicate vs. User Defined Subclasses}
+	\begin{itemize}
+		\item \textbf{Predicate Defined} if membership is determined by placing condition on value of attribute of superclass
+		\item \textbf{User Defined} if membership is specified for all entities by the user.
+	\end{itemize}
+	\section{Disjoint vs. Overlapping}
+	\begin{itemize}
+		\item \textbf{Disjoint} if entity may not belong to $>1$ subclass
+		\begin{itemize}
+			\item indicated by \mycirc{d} branch off superclass
+		\end{itemize}
+		\item \textbf{Overlapping} if there is no disjointness constraint
+		\begin{itemize}
+			\item indicated by \mycirc{o}
+		\end{itemize}
+	\end{itemize}
+	\section{Complete (total) vs Partial}
+	\begin{itemize}
+		\item \textbf{complete}  if entity must belong to a subclass. The union of all entities in its superclasses.
+		\begin{itemize}
+			indicated by double line
+		\end{itemize}
+		\item \textbf{partial} if there is not a completeness requirement. Subset of the union
+	\end{itemize}
+	\section{Specialization Hierarchy vs Lattice}
+	\begin{itemize}
+		\item \textbf{hierarchy} if every subclass is allowed to be a subclass of only one parent class $\rightarrow$ tree/strict hierarchy
+		\item \textbf{lattice} if each subclass is permitted to be a subclass of $>1$ parent
+		\begin{itemize}
+			\item same idea as multiple inheritance, and subclass must have parent from all classes it inherits
+		\end{itemize}
+	\end{itemize}
+	\section{UNION type}
+	\begin{itemize}
+		\item represents collection of entities from different types
+		\item a union of entities is called a \textbf{uniontype} or \textbf{category}
+		\item ex. bank$\cup$person$\cup$company$\rightarrow$owner
+		\item category inherits attributes only of the subclass it belongs to
+		\item needed for situations where "is all" relationship does not exist
+	\end{itemize}
+	\section{ERR Design Guidelines}
+	\begin{itemize}
+		\item only use subclasses when deemed necessary
+		\item union/categories should generally be avoided
+		\item choice of disjoint/overlapping and user/predicate defined should be based on the miniworld requirements.
+		\begin{itemize}
+			\item default to overlapping/partial
+		\end{itemize}
+	\end{itemize}
 	
-	\chapter{Week 2}
-	\section{Definitions}
-	\begin{description}[style=multiline,leftmargin=12em]
-		\item [Schemas/Schemata] Data (record) structure, untyped, no constraints or relationships, and doesn't change frequently. \textit{Description of data}.
-		\item [Schema Evolution] the change of a schema (avoid it). Could indicate poor design if required.
-		\item [Schema Construct] Specific names of schemata (table headers/titles).
-		\item [Database Snapshot] Data of databases at a specific time.
-		\item [Empty State] Only the schema, \textit{no population}.
-		\item [Initial State] When the database is first populated
-		\item [3-layer Architecture] External views, conceptual schema, and internal schema. Recommended format. Also called 3-schema/ANSI architecture.
-		\item [External View] External/Conceptual mapping. End users. Provides separate views to different users, Permits only certain operations: \textbf{submit form data}, \textbf{execute stored procedures}.
-		\item [Conceptual Schema] Conceptual/Internal mapping. Hides the details of the physical storage structure. \textbf{Entities}, \textbf{Attributes}, and \textbf{Relationships}.
-		\item [Internal Schema] Contains actual data, stored database. Describes the physical storage structure. Contains \textbf{access path} information. 
-		\item [Logical data independece] change the conceptual schema without having to change external schemata or application programs.
-		\item [Physical data independece]change the internal schema without having to change the conceptual schema.
+	\chapter{Chapter 9}
+	\section{ER-to-Relation}
+	\begin{itemize}
+		\item \textbf{Step 1}: Map Regular Entity Type
+		\begin{itemize}
+			\item for each regular (strong) entity type $E$, create relation $R$ with all of $E$'s sample attributes (flatten composites)
+			\item called "entity relations", and each tuple is "entity instance"
+			\item choose ONE key in $E$ to be the Private Key in $R$.
+		\end{itemize}
+		\item \textbf{Step 2: Map Weak Entity Types}
 		
-		\item [Submit form data]
-		\item [Stored Procedures]
-		\item [Entities] represent real world objects. Ex. Students, Courses
-		\item [Attributes] Represent entity properties. Ex. Name, ID
-		\item [Relationships] Represent entity associations. Ex. Is enrolled in
-		\item [Access paths] Search structure that allows finding of records by attributes, uses indexing or hashing, may be optimized for different common-case queries.
-		
-		\item [DBMS Languages] \textbf{DDL}, \textbf{SDL}, \textbf{DML} all used in SQL. These languages are usually not considered distinct languages.
-		\item [DDL] Data definition language. Conceptual and internal schemata.
-		\item [SDL] Storage definition language. Internal schema
-		\item [DML] Data manipulation language. A means for users to manipulate the database. Retrieval, insertion, deletion, and modification of the data.
-		
-		
-		\item [Concurency Control]
-	\end{description}
-	\section{Database Creation}
-	Every time the database is updated, we get another database state i.e. the current state (current snapshot)
+	\end{itemize}
+	
+	
 	
 	
 \end{document}
